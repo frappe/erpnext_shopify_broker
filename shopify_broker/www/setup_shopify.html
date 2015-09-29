@@ -1,0 +1,48 @@
+<div class="user-content" style="max-width: 500px;">
+	<div class="alert alert-warning" id="message" style="display: none;"></div>
+	<form>
+		<fieldset>
+			<label>Shop Name</label>
+			<input class="form-control" type="text" id="shop" placeholder="Your Name">
+		</fieldset>
+		<fieldset>
+			<label>Erpnext Sitename</label>
+			<div class="input-group">
+				<input class="form-control" type="text" id="site_name" placeholder="Your Site Name" aria-describedby="basic-addon2">
+				<span class="input-group-addon" id="basic-addon2">.erpnext.com</span>
+			</div>
+		</fieldset>
+		<fieldset>
+			<label>ERPnext's User Id</label>
+			<input class="form-control" type="text" id="email" placeholder="User ID">
+		</fieldset>
+		<fieldset>
+			<label>Password</label>
+			<input class="form-control" type="password" id="password" placeholder="Password">
+		</fieldset>
+		<button id="update_user" type="submit" class="btn btn-default">Submit</button>
+	</form>
+</div>
+<script>
+$(document).ready(function() {
+	$("#fullname").val(getCookie("full_name") || "");
+	$("#update_user").click(function() {
+		frappe.call({
+			method: "shopify_broker.shopify_broker.validate_erp_user",
+			type: "POST",
+			args: {
+				shop: $("#shop").val(),
+				site_name: $("#site_name").val(),
+				email: $("#email").val(),
+				password: $("#password").val()
+			},
+			callback: function(r) {
+				alert(r.message.auth_url)
+				window.open(r.message.auth_url);
+			}
+		});
+		return false;
+	})
+})
+</script>
+<!-- no-sidebar -->
