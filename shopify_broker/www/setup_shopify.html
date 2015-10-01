@@ -3,14 +3,11 @@
 	<form>
 		<fieldset>
 			<label>Shop Name</label>
-			<input class="form-control" type="text" id="shop" placeholder="Your Name">
+			<input class="form-control" type="text" id="shop" placeholder="Shop Name">
 		</fieldset>
 		<fieldset>
 			<label>Erpnext Sitename</label>
-			<div class="input-group">
-				<input class="form-control" type="text" id="site_name" placeholder="Your Site Name" aria-describedby="basic-addon2">
-				<span class="input-group-addon" id="basic-addon2">.erpnext.com</span>
-			</div>
+			<input class="form-control" type="text" id="site_name" placeholder="Your Site Name">
 		</fieldset>
 		<fieldset>
 			<label>ERPnext's User Id</label>
@@ -37,7 +34,6 @@ $(document).ready(function() {
 				password: $("#password").val()
 			},
 			callback: function(r) {
-				alert(r.message.auth_url)
 				window.open(r.message.auth_url);
 			}
 		});

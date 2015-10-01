@@ -8,7 +8,7 @@ app_description = "A broker to install Shopify public app."
 app_icon = "icon-random"
 app_color = "#9b59b6"
 app_email = "info@frappe.io"
-app_version = "0.0.1"
+app_version = "1.0.0"
 
 # Includes in <head>
 # ------------------
