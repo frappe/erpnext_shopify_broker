@@ -1,35 +1,51 @@
-<div class="user-content" style="max-width: 500px;">
-	<div class="alert alert-warning" id="message" style="display: none;"></div>
-	<form>
-		<fieldset>
-			<label>Shop Name</label>
-			<input class="form-control" type="text" id="shop" placeholder="Shop Name">
-		</fieldset>
-		<fieldset>
-			<label>Erpnext Sitename</label>
-			<input class="form-control" type="text" id="site_name" placeholder="Your Site Name">
-		</fieldset>
-		<fieldset>
-			<label>ERPnext's User Id</label>
-			<input class="form-control" type="text" id="email" placeholder="User ID">
-		</fieldset>
-		<fieldset>
-			<label>Password</label>
-			<input class="form-control" type="password" id="password" placeholder="Password">
-		</fieldset>
-		<button id="update_user" type="submit" class="btn btn-default">Submit</button>
-	</form>
+
+<div class="user-content" style="margin-top:20px;">
+	<div class="user-content" >
+		<div class="user-content" style="max-width: 360px; margin:0 auto;">
+			<div class="alert alert-warning" id="message" style="display: none;"></div>
+			<form>
+				<fieldset>
+					<legend> ERPNext-Shopify Connector 
+						<p class="help-box small text-muted hidden-xs" style="font-size:60%; margin:1px 0px;"> Submit Accont Details and connect to ERPNext!! </p>
+					</legend>
+					<fieldset>
+						<label>Shop Name</label>
+						<input class="form-control" type="text" id="shop" placeholder="Shop Name">
+						<p class="help-box small text-muted hidden-xs" style="margin:1px 0px;">eg: erpnext.myshopify.com</p>
+					</fieldset>
+					<fieldset>
+						<label>ERPNext Site Name</label>
+						<input class="form-control" type="text" id="site_name" placeholder="Your Site Name">
+						<p class="help-box small text-muted hidden-xs" style="margin:1px 0px;">eg: demo.erpnext.com</p>
+					</fieldset>
+					<fieldset>
+						<label>ERPNext User Id</label>
+						<input class="form-control" type="text" id="email" placeholder="User ID">
+					</fieldset>
+					<fieldset>
+						<label>Password</label>
+						<input class="form-control" type="password" id="password" placeholder="Password">
+					</fieldset>
+					<div style="text-align: center;">
+						<button id="update_user" type="submit" class="btn btn-primary" style="width:100px;">Submit</button>
+					</div>
+			</fieldset>
+			</form>
+		</div>
+	</div>
 </div>
 <script>
 $(document).ready(function() {
+	$(".page-header-block").hide();
+	$(".page-breadcrumbs").hide();
 	$("#fullname").val(getCookie("full_name") || "");
 	$("#update_user").click(function() {
 		frappe.call({
 			method: "shopify_broker.shopify_broker.validate_erp_user",
 			type: "POST",
 			args: {
-				shop: $("#shop").val(),
-				site_name: $("#site_name").val(),
+				shop: geturl($("#shop").val()),
+				site_name: geturl($("#site_name").val()),
 				email: $("#email").val(),
 				password: $("#password").val()
 			},
@@ -40,5 +56,11 @@ $(document).ready(function() {
 		return false;
 	})
 })
+
+function geturl(str){
+	var re = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/igm;
+	var m = re.exec(str);
+	return m[0].replace(/.*?:\/\//g, "");
+}
 </script>
-<!-- no-sidebar -->
+	
