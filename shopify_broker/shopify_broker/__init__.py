@@ -49,8 +49,7 @@ def generate_token():
 		"code": form_dict["code"]
 	}
 	url = "https://{}/admin/oauth/access_token".format(form_dict["shop"])
-	res = requests.post(url= url, data=json.dumps(token_dict), headers={'Content-type': 'application/json'})
-	print 
+	res = requests.post(url= url, data=json.dumps(token_dict), headers={'Content-type': 'application/json'}) 
 	update_shopify_settings(res.json()['access_token'])
 	
 def update_shopify_settings(access_token):
