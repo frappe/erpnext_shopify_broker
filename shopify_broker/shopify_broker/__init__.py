@@ -3,8 +3,8 @@ from werkzeug.wrappers import Response
 import hashlib, base64, hmac
 import requests
 import json
-
-cred_dict = {}
+import pickle as pk
+from frappe.utils import getdate, now, time_diff_in_hours
 
 @frappe.whitelist(allow_guest=True)
 def authenticate_user():
@@ -15,13 +15,31 @@ def authenticate_user():
 	frappe.response["page_name"] = "setup_shopify"	
 
 @frappe.whitelist(allow_guest=True)
-def validate_erp_user(shop, site_name, email, password):
-	global cred_dict
-	cred_dict = {"shop": shop, "site_name": site_name, "email": email, "password": password}
+def validate_erp_user(shop, site_name, email, password):	
+	session = requests.Session()
+	res = session.post(url="https://{}/api/method/login?usr={}&pwd={}".format(site_name, email, password))
+	pk.dumps(session)
+	if res.status_code == 200:
+		if res.json()["full_name"]:
+			url = "https://{}/api/resource/Shopify Settings/Shopify Settings".format(site_name)
+			res = session.get(url)
+			if res.status_code == 200:
+				create_shopify_user_record(session, shop, site_name, email)
+				return generate_redirect_uri(shop)
+			else:
+				return {"error": "You haven't installed ERPNent Shopify App."}
+	else:
+		return {"error": "Username or Password is wrong"}
 	
-	res = requests.post(url="https://{}/api/method/login?usr={}&pwd={}".format(site_name, email, password))
-	if res.json()["full_name"]:
-		return generate_redirect_uri(shop)
+def create_shopify_user_record(session, shop, site_name, email):
+	frappe.set_user("Administrator")
+	frappe.get_doc({
+		"doctype": "Shopify User",
+		"shop_name": shop,
+		"site_name": site_name,
+		"user_id": email,
+		"session_details": pk.dumps(session)
+	}).insert()
 
 def generate_redirect_uri(shop): 
 	broker_settings = get_brocker_details()
@@ -49,22 +67,36 @@ def generate_token():
 		"code": form_dict["code"]
 	}
 	url = "https://{}/admin/oauth/access_token".format(form_dict["shop"])
-	res = requests.post(url= url, data=json.dumps(token_dict), headers={'Content-type': 'application/json'})
-	print 
-	update_shopify_settings(res.json()['access_token'])
+	res = requests.post(url= url, data=json.dumps(token_dict), headers={'Content-type': 'application/json'}) 
+	update_shopify_settings(res.json()['access_token'], form_dict)
 	
-def update_shopify_settings(access_token):
-	s = requests.Session()
-	res = s.post(url="https://{}/api/method/login?usr={}&pwd={}".format(cred_dict["site_name"], cred_dict["email"], cred_dict["password"]))
+def update_shopify_settings(access_token, form_dict):
+	shopify_user = frappe.get_doc("Shopify User", frappe.db.get_value("Shopify User", \
+		{"shop_name": form_dict["shop"]}, "name"))
+	session = pk.loads(shopify_user.session_details)
 	
-	url = "https://{}/api/resource/Shopify Settings/Shopify Settings".format(cred_dict["site_name"])
+	url = "https://{}/api/resource/Shopify Settings/Shopify Settings".format(shopify_user.site_name)
 	data = {
 		"access_token": access_token,
-		"shopify_url": cred_dict["shop"]
+		"shopify_url": form_dict["shop"],
+		"app_type": "Public"
+		
 	}
-	res = s.put(url, data='data='+json.dumps(data), headers={'content-type': 'application/x-www-form-urlencoded'})	
-	
-	frappe.response["type"] = 'redirect'
-	frappe.response["location"] = "https://{}/admin/apps".format(cred_dict["shop"])
-	
-	
+
+	res = session.put(url, data='data='+json.dumps(data), headers={'content-type': 'application/x-www-form-urlencoded'})
+
+	if res.status_code == 200:
+		url = "https://{}/api/method/logout".format(shopify_user.site_name)
+		res = session.get(url)
+		
+		frappe.response["type"] = 'redirect'
+		frappe.response["location"] = "https://{}/admin/apps".format(form_dict["shop"])
+
+def clear_session_details():
+	frappe.set_user("Administrator")
+	for doc in frappe.db.sql("select name from `tabShopify User` where session_details not in('')", as_dict=1):
+		shopify_user = frappe.get_doc("Shopify User", doc["name"])
+		if time_diff_in_hours(now(), getdate(shopify_user.creation)) > 1:
+			shopify_user.session_details = ''
+			shopify_user.save()
+		
