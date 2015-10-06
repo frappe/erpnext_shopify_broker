@@ -9,6 +9,7 @@ app_icon = "icon-random"
 app_color = "#9b59b6"
 app_email = "info@frappe.io"
 app_version = "1.0.0"
+hide_in_installer = True
 
 # Includes in <head>
 # ------------------
