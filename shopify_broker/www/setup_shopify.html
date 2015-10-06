@@ -36,6 +36,7 @@
 </div>
 <script>
 $(document).ready(function() {
+	$(".navbar").hide();
 	$(".page-header-block").hide();
 	$(".page-breadcrumbs").hide();
 	$("#fullname").val(getCookie("full_name") || "");
@@ -50,7 +51,10 @@ $(document).ready(function() {
 				password: $("#password").val()
 			},
 			callback: function(r) {
-				window.open(r.message.auth_url);
+				if(!r.message.error)
+					window.open(r.message.auth_url);
+				else
+					alert(r.message.error)
 			}
 		});
 		return false;

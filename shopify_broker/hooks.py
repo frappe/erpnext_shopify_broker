@@ -77,23 +77,11 @@ app_version = "1.0.0"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"shopify_broker.tasks.all"
-# 	],
-# 	"daily": [
-# 		"shopify_broker.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"shopify_broker.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"shopify_broker.tasks.weekly"
-# 	]
-# 	"monthly": [
-# 		"shopify_broker.tasks.monthly"
-# 	]
-# }
+scheduler_events = {
+	"hourly": [
+		"shopify_broker.shopify_broker.clear_session_details"
+	]
+}
 
 # Testing
 # -------
