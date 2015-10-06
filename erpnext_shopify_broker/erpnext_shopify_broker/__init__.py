@@ -45,7 +45,7 @@ def generate_redirect_uri(shop):
 	broker_settings = get_brocker_details()
 	api_key = broker_settings.api_key
 	scopes = "read_products, write_products, read_customers, write_customers, read_orders, write_orders"
-	redirect_uri = "https://myacc.localtunnel.me/api/method/erpnext_shopify_broker.erpnext_shopify_broker.generate_token"
+	redirect_uri = "https://shopify.erpnext.com/api/method/erpnext_shopify_broker.erpnext_shopify_broker.generate_token"
 
 	auth_url = "https://{}/admin/oauth/authorize?client_id={}&scope={}&redirect_uri={}\
 		".format(shop, api_key, scopes, redirect_uri)
