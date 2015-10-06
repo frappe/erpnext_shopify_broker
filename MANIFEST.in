@@ -4,15 +4,15 @@ include *.json
 include *.md
 include *.py
 include *.txt
-recursive-include shopify_broker *.css
-recursive-include shopify_broker *.csv
-recursive-include shopify_broker *.html
-recursive-include shopify_broker *.ico
-recursive-include shopify_broker *.js
-recursive-include shopify_broker *.json
-recursive-include shopify_broker *.md
-recursive-include shopify_broker *.png
-recursive-include shopify_broker *.py
-recursive-include shopify_broker *.svg
-recursive-include shopify_broker *.txt
-recursive-exclude shopify_broker *.pyc
+recursive-include erpnext_shopify_broker *.css
+recursive-include erpnext_shopify_broker *.csv
+recursive-include erpnext_shopify_broker *.html
+recursive-include erpnext_shopify_broker *.ico
+recursive-include erpnext_shopify_broker *.js
+recursive-include erpnext_shopify_broker *.json
+recursive-include erpnext_shopify_broker *.md
+recursive-include erpnext_shopify_broker *.png
+recursive-include erpnext_shopify_broker *.py
+recursive-include erpnext_shopify_broker *.svg
+recursive-include erpnext_shopify_broker *.txt
+recursive-exclude erpnext_shopify_broker *.pyc

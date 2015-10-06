@@ -42,7 +42,7 @@ $(document).ready(function() {
 	$("#fullname").val(getCookie("full_name") || "");
 	$("#update_user").click(function() {
 		frappe.call({
-			method: "shopify_broker.shopify_broker.validate_erp_user",
+			method: "erpnext_shopify_broker.erpnext_shopify_broker.validate_erp_user",
 			type: "POST",
 			args: {
 				shop: geturl($("#shop").val()),

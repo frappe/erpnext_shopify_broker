@@ -5,7 +5,7 @@ import os
 version = '1.0.0'
 
 setup(
-    name='shopify_broker',
+    name='erpnext_shopify_broker',
     version=version,
     description='A broker to install Shopify public app.',
     author='Frappe Technologies Pvt. Ltd.',

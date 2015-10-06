@@ -4,10 +4,10 @@ from frappe import _
 
 def get_data():
 	return {
-		"Shopify Broker": {
+		"ERPNext Shopify Broker": {
 			"color": "#9b59b6",
 			"icon": "icon-random",
 			"type": "module",
-			"label": _("Shopify Broker")
+			"label": _("ERPNext Shopify Broker")
 		}
 	}
