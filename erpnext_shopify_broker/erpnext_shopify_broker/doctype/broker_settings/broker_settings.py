@@ -54,7 +54,7 @@ def generate_redirect_uri(shop):
 	broker_settings = get_brocker_details()
 	api_key = broker_settings.api_key
 	scopes = "read_products, write_products, read_customers, write_customers, read_orders, write_orders"
-	redirect_uri = frappe.utils.get_url("/api/method/erpnext_shopify_broker.erpnext_shopify_broker.generate_token")
+	redirect_uri = frappe.utils.get_url("/api/method/erpnext_shopify_broker.erpnext_shopify_broker.doctype.broker_settings.broker_settings.generate_token")
 
 	auth_url = "https://{}/admin/oauth/authorize?client_id={}&scope={}&redirect_uri={}\
 		".format(shop, api_key, scopes, redirect_uri)
@@ -80,8 +80,9 @@ def generate_token():
 	update_shopify_settings(res.json()['access_token'], form_dict)
 	
 def update_shopify_settings(access_token, form_dict):
-	shopify_user = frappe.get_doc("Shopify User", frappe.db.get_value("Shopify User", \
-		{"shop_name": form_dict["shop"]}, "name"))
+	shopify_user = frappe.db.sql("""select name from `tabShopify User` 
+		where shop_name = '%s' order by creation desc limit 1"""%form_dict["shop"], as_list=1)[0][0]
+	shopify_user = frappe.get_doc("Shopify User", shopify_user)
 	session = pk.loads(shopify_user.session_details)
 	
 	url = "https://{}/api/resource/Shopify Settings/Shopify Settings".format(shopify_user.site_name)
