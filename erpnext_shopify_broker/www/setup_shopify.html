@@ -42,7 +42,7 @@ $(document).ready(function() {
 	$("#fullname").val(getCookie("full_name") || "");
 	$("#update_user").click(function() {
 		frappe.call({
-			method: "erpnext_shopify_broker.erpnext_shopify_broker.validate_erp_user",
+			method:"erpnext_shopify_broker.erpnext_shopify_broker.doctype.broker_settings.broker_settings.validate_erp_user",
 			type: "POST",
 			args: {
 				shop: geturl($("#shop").val()),
@@ -52,7 +52,7 @@ $(document).ready(function() {
 			},
 			callback: function(r) {
 				if(!r.message.error)
-					window.open(r.message.auth_url);
+					window.open(r.message.auth_url, "_self");
 				else
 					alert(r.message.error)
 			}

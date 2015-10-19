@@ -1,0 +1,191 @@
+<!-- title: ERPNext-Shopify Connector -->
+<!-- no-sidebar -->
+<!-- jinja -->
+
+<!-- Navigation -->
+<!-- Hero Section -->
+<style>
+p { 
+	font-size: 16px;
+    color: #6c7680;
+    font-family: "proxima-nova", sans-serif;
+	line-height: 1.5em;
+}
+a{
+    font-size: 16px;
+    font-family: "proxima-nova", sans-serif;
+}
+li{
+	line-height: 1.5em;
+    font-family: "proxima-nova", sans-serif;
+}
+h1{
+	font-size: 30px;
+	font-family: "proxima-nova", sans-serif;
+	font-weight: bold;
+}
+h4{
+	font-family: "proxima-nova", sans-serif;
+	font-weight: bold;
+}
+h3{
+	font-family: "proxima-nova", sans-serif;
+	font-weight: bold;
+}
+h5{
+	font-family: "proxima-nova", sans-serif;
+	font-weight: bold;
+}
+.snap{
+	display: block;
+    width: 80%;
+    height: auto;
+}
+.para-margin{
+	margin-left: 5%;
+}
+</style>
+
+<div class="col-sm-12">
+	<div class="page-header-block" data-html-block="header">
+		<h1> ERPNext - Shopify Connector </h1>
+	</div>
+    	
+	<div class="col-sm-8" style="margin-top: 2%;">
+        <p> 
+			ERPNext Connector is OAuth based bridge between Shopify and ERPNext. This connector helps in,
+			<ul> 
+				<li><p> Sync Orders from Shopify to ERPNext </p></li>
+				<li><p> Sync Products and Cutomers in both way <p></li>
+			</ul>
+		</p>
+		<p>
+			ERPNext helps you take full control of your business. It is as powerful as it is easy to use.
+		</p>
+		<p> 
+			There are two steps to get connected with ERPNext via Shopify APP
+		</p>
+		<ol class="app_type">
+			<li> 
+				<a href="#connect-via-public-app">
+					<b>Connect via Public App </b>
+				</a>
+			</li>
+			<li> 
+				<a href="#connect-via-private-app">
+					<b>Connect via Private App </b>
+				</a>
+			</li>
+		</ol>
+	</div>
+    <!-- <div class="col-sm-4" >
+       <p>
+		   <img src="/assets/erpnext_shopify_broker/images/Connector.jpg">
+	   </p>
+    </div> -->
+</div>
+<div class="col-sm-12">
+	<h3>
+		<a id="connect-via-public-app" class="anchor" href="#connect-via-public-app" aria-hidden="true">
+			<span class="octicon octicon-link"></span>
+		</a>
+		Connect via Public App
+	</h3>
+	<p>
+		<h4>Steps To Follow:</h4>
+	</p>
+	<ol>
+		<li> 
+			<p> Install ERPNext-Shopify Connector from ERPNext Installer </p>
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker1.1.png">
+			</p> 
+		</li>
+		<li>
+			<p> Get
+				<b><i>
+					<a href="https://apps.shopify.com/erpnext-connector-1"> ERPNext Connector </a>
+				</i></b> from Shopify App Store 
+			</p>
+		</li>
+		<li> 
+			<p> Fillup <b> ERPNext-Shopify Connector </b> form and click on submit </p>
+			<p class="para-margin">
+				<img class="snap" src= "/assets/erpnext_shopify_broker/images/broker1.2.png">
+			</p>
+		</li>
+		<li> <p>  Permission page with install button will popup. It will ask permissions to access, </p>
+				<ul>
+					<li> 
+						<p> Modify Products, variants and collections </p> 
+					</li>
+					<li>
+						<p> Modify Customer details and customer groups </p>
+					</li>
+					<li>
+						<p> Modify Orders, transactions and fulfillments </p>
+					</li>
+				</ul>
+			
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker1.3.png">
+			</p>
+		</li>
+		<li>
+			<h5><p> Setup Shopify Settings </p></h5>
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker1.4.png" ></p>
+		</li>
+		<li>
+			<p> 
+				You can sync data, by clicking 
+					<b>Sync Shopify</b> button from Shopify Settings or via scheduler which will sync data after an hour.
+			</p>
+		</li>
+	</ol>
+</div>
+<div class="col-sm-12 tab-pane">
+	<h3>
+		<a id="connect-via-private-app" class="anchor" href="#connect-via-private-app" aria-hidden="true">
+			<span class="octicon octicon-link"></span>
+		</a>
+		Connect via Private App
+	</h3>
+	<p>
+		<h4>Steps To Follow:</h4>
+	</p>
+	<ol>
+		<li> <p> Install ERPNext-Shopify Connector from ERPNext Installer </p>
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker1.1.png">
+			</p> 
+		</li>
+		<li>
+			<p> From Shopify admin desk you can create private app, APP > Private App </p> 
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker2.1.png">
+			</p>
+		</li>
+		<li>
+			<p> From Private App, pickup API key and password and place them inside  ERPNext Shopify Settings </p> 
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker2.2.png">
+			</p>
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker2.3.png">
+			</p>
+		</li>
+		<li>
+			<h5><p> Setup Shopify Settings </p></h5>
+			<p class="para-margin">
+				<img class="snap" src="/assets/erpnext_shopify_broker/images/broker1.4.png">
+			</p>
+		</li>
+		<li>
+			<p> 
+				You can sync data, by clicking 
+					<b>Sync Shopify</b> button from Shopify Settings or via scheduler which will sync data after an hour.
+			</p>
+		</li>
+	</ol>
+</div>
