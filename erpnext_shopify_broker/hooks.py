@@ -80,7 +80,7 @@ hide_in_installer = True
 
 scheduler_events = {
 	"hourly": [
-		"erpnext_shopify_broker.erpnext_shopify_broker.clear_session_details"
+		"erpnext_shopify_broker.erpnext_shopify_broker.doctype.broker_settings.broker_settings.clear_session_details"
 	]
 }
 
