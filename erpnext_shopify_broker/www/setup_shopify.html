@@ -52,7 +52,7 @@ $(document).ready(function() {
 			},
 			callback: function(r) {
 				if(!r.message.error)
-					window.open(r.message.auth_url, "_self");
+					window.open(r.message.redirect, "_self");
 				else
 					alert(r.message.error)
 			}

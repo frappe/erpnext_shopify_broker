@@ -8,7 +8,7 @@ app_description = "A broker to install Shopify public app."
 app_icon = "icon-random"
 app_color = "#9b59b6"
 app_email = "info@frappe.io"
-app_version = "1.0.0"
+app_version = "1.1.0"
 hide_in_installer = True
 
 # Includes in <head>
@@ -77,12 +77,6 @@ hide_in_installer = True
 
 # Scheduled Tasks
 # ---------------
-
-scheduler_events = {
-	"hourly": [
-		"erpnext_shopify_broker.erpnext_shopify_broker.doctype.broker_settings.broker_settings.clear_session_details"
-	]
-}
 
 # Testing
 # -------
