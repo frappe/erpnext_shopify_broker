@@ -119,7 +119,7 @@ def update_shopify_settings(shop, session, site_name, email):
 def update_broker_info(shopify_user, email, site_name):
 	shopify_user = frappe.get_doc("Shopify User", shopify_user)
 	shopify_user.site_name = site_name
-	shopify_user.email = email
+	shopify_user.user_id = email
 	shopify_user.save()
 	
 	return shopify_user
