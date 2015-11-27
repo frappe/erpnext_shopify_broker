@@ -8,7 +8,7 @@ from frappe.model.document import Document
 import hashlib, base64, hmac
 import requests
 import json
-import pickle as pk
+from frappe import _
 from frappe.utils import getdate, now, time_diff_in_hours
 
 class BrokerSettings(Document):
@@ -86,9 +86,13 @@ def validate_erp_user(shop, site_name, email, password):
 			if res.status_code == 200:
 				return update_shopify_settings(shop, session, site_name, email)
 			else:
-				return {"error": "You haven't installed ERPNent Shopify App."}
+				status = install_erpnext_shopify_app(session, site_name)
+				if status == 200:
+					update_shopify_settings(shop, session, site_name, email)
+				else:
+					return {"error": _("Something went wrong. Please try again.")}
 	else:
-		return {"error": "Username or Password is wrong"}
+		return {"error": _("Username or Password is wrong")}
 		
 def update_shopify_settings(shop, session, site_name, email):
 	frappe.set_user("Administrator")
@@ -114,7 +118,7 @@ def update_shopify_settings(shop, session, site_name, email):
 		return {"redirect": "https://{}/admin/apps".format(shop)}
 		
 	else:
-		return {"error": "Something went wrong. Please try again."}
+		return {"error": _("Something went wrong. Please try again.")}
 		
 def update_broker_info(shopify_user, email, site_name):
 	shopify_user = frappe.get_doc("Shopify User", shopify_user)
@@ -123,3 +127,10 @@ def update_broker_info(shopify_user, email, site_name):
 	shopify_user.save()
 	
 	return shopify_user
+
+def install_erpnext_shopify_app(session, site_name):
+	res = session.post(url="https://{0}/api/method/{1}?name=erpnext_shopify".format(site_name, 
+		"frappe.desk.page.applications.applications.install_app"))
+	
+	return res.status_code 
+		
