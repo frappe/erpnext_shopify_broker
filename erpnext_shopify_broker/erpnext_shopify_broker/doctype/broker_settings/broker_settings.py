@@ -39,8 +39,7 @@ def generate_redirect_uri(shop):
 
 @frappe.whitelist(allow_guest=True)
 def generate_token():
-	form_dict = frappe.local.form_dict
-		
+	form_dict = frappe.local.form_dict	
 	frappe.set_user("Administrator")
 	
 	broker_settings = get_brocker_details()
