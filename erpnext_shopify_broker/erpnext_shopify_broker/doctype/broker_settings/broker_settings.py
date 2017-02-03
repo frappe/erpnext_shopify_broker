@@ -21,12 +21,12 @@ def get_brocker_details():
 def authenticate_user():
 	form_dict = frappe.local.form_dict
 	
-	frappe.response["type"] = 'redirect'
-	auth_url = generate_redirect_uri(form_dict.shop)['auth_url']	
+	frappe.local.response["type"] = 'redirect'
+	auth_url = generate_redirect_uri(form_dict.shop)['auth_url']
 	
-	frappe.response["location"] = auth_url
+	frappe.local.response["location"] = auth_url
 
-def generate_redirect_uri(shop): 
+def generate_redirect_uri(shop):
 	broker_settings = get_brocker_details()
 	api_key = broker_settings.api_key
 	scopes = "read_products, write_products, read_customers, write_customers, read_orders, write_orders"
@@ -70,11 +70,11 @@ def create_shopify_user_record(shop, access_token, site_name=None, email=None):
 	}).insert()
 	
 def erp_page():
-	frappe.response["type"] = 'page'
-	frappe.response["page_name"] = "setup_shopify"
+	frappe.local.response["type"] = 'page'
+	frappe.local.response["page_name"] = "setup_shopify"
 
 @frappe.whitelist(allow_guest=True)
-def validate_erp_user(shop, site_name, email, password):	
+def validate_erp_user(shop, site_name, email, password):
 	session = requests.Session()
 	res = session.post(url="https://{}/api/method/login?usr={}&pwd={}".format(site_name, email, password))
 
@@ -96,7 +96,7 @@ def validate_erp_user(shop, site_name, email, password):
 def update_shopify_settings(shop, session, site_name, email):
 	frappe.set_user("Administrator")
 	
-	shopify_user = frappe.db.sql("""select name from `tabShopify User` 
+	shopify_user = frappe.db.sql("""select name from `tabShopify User`
 		where shop_name = %s order by creation desc limit 1""", shop, as_list=1)[0][0]
 		
 	shopify_user = update_broker_info(shopify_user, email, site_name)
