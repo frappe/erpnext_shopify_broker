@@ -71,7 +71,7 @@ def create_shopify_user_record(shop, access_token, site_name=None, email=None):
 	
 def erp_page():
 	frappe.local.response["type"] = 'page'
-	frappe.local.response["page_name"] = "setup_shopify"
+	frappe.local.response["route"] = "setup_shopify"
 
 @frappe.whitelist(allow_guest=True)
 def validate_erp_user(shop, site_name, email, password):
