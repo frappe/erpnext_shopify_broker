@@ -49,6 +49,12 @@ frappe.ready(function() {
 	$(".page-header-block").hide();
 	$(".page-breadcrumbs").hide();
 	$("#fullname").val(getCookie("full_name") || "");
+
+	var query_params  = get_query_params() || {};
+	if(query_params['shop']){
+		$("#shop").val(query_params['shop']);
+	}
+
 	$("#update_user").click(function() {
 		frappe.call({
 			method:"erpnext_shopify_broker.erpnext_shopify_broker.doctype.broker_settings.broker_settings.validate_erp_user",

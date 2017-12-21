@@ -56,7 +56,7 @@ def generate_token():
 		
 	create_shopify_user_record(form_dict["shop"], res.json()['access_token'])
 	
-	erp_page()
+	erp_page(form_dict["shop"])
 		
 def create_shopify_user_record(shop, access_token, site_name=None, email=None):
 	frappe.set_user("Administrator")
@@ -69,9 +69,9 @@ def create_shopify_user_record(shop, access_token, site_name=None, email=None):
 		"access_token": access_token
 	}).insert()
 	
-def erp_page():
+def erp_page(shop):
 	frappe.local.response["type"] = 'page'
-	frappe.local.response["route"] = "setup_shopify"
+	frappe.local.response["route"] = "setup_shopify?shop={}".format(shop)
 
 @frappe.whitelist(allow_guest=True)
 def validate_erp_user(shop, site_name, email, password):
